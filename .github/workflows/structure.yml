@@ -1,0 +1,22 @@
+name: Skill self-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: 自检
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: skill 自检（结构 + 语法）
+        env:
+          PYTHONUTF8: "1"
+        run: python scripts/selfcheck.py --strict
